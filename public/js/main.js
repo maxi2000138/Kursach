@@ -159,9 +159,18 @@ document.addEventListener('DOMContentLoaded', function() {
                 const inputTop = inputRect.top - formGroupRect.top;
                 const inputHeight = inputRect.height;
                 toggle.style.top = (inputTop + inputHeight / 2) + 'px';
+                
+                // Показываем иконку только после вычисления позиции
+                requestAnimationFrame(() => {
+                    toggle.classList.add('visible');
+                });
             };
             
-            updatePosition();
+            // Используем requestAnimationFrame для правильного вычисления после рендера
+            requestAnimationFrame(() => {
+                updatePosition();
+            });
+            
             window.addEventListener('resize', updatePosition);
             
             toggle.addEventListener('click', function(e) {

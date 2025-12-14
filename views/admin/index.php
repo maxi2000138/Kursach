@@ -56,9 +56,13 @@ require __DIR__ . '/../layouts/header.php';
                                 ?>
                             </td>
                             <td>
-                                <?php foreach ($user['roles'] as $role): ?>
-                                    <span class="role-badge"><?= htmlspecialchars($role) ?></span>
-                                <?php endforeach; ?>
+                                <?php 
+                                $currentRole = !empty($user['roles']) ? $user['roles'][0] : null;
+                                if ($currentRole): ?>
+                                    <span class="role-badge"><?= htmlspecialchars($currentRole) ?></span>
+                                <?php else: ?>
+                                    <span style="color: var(--gray);">Нет роли</span>
+                                <?php endif; ?>
                             </td>
                             <td>
                                 <?php if ($user['is_active']): ?>
@@ -76,21 +80,25 @@ require __DIR__ . '/../layouts/header.php';
                             </td>
                             <td><?= formatDate($user['created_at']) ?></td>
                             <td class="actions">
-                                <form method="POST" action="/admin/toggle-user" style="display: inline;">
-                                    <input type="hidden" name="csrf_token" value="<?= csrfToken() ?>">
-                                    <input type="hidden" name="user_id" value="<?= $user['id'] ?>">
-                                    <button type="submit" class="btn btn-small <?= $user['is_active'] ? 'btn-warning' : 'btn-success' ?>">
-                                        <?= $user['is_active'] ? 'Заблокировать' : 'Разблокировать' ?>
-                                    </button>
-                                </form>
+                                <?php if ($user['id'] !== ($_SESSION['user_id'] ?? 0)): ?>
+                                    <form method="POST" action="/admin/toggle-user" style="display: inline;">
+                                        <input type="hidden" name="csrf_token" value="<?= csrfToken() ?>">
+                                        <input type="hidden" name="user_id" value="<?= $user['id'] ?>">
+                                        <button type="submit" class="btn btn-small <?= $user['is_active'] ? 'btn-warning' : 'btn-success' ?>">
+                                            <?= $user['is_active'] ? 'Заблокировать' : 'Разблокировать' ?>
+                                        </button>
+                                    </form>
+                                <?php else: ?>
+                                    <span style="color: var(--gray); font-size: 0.85rem;">Вы</span>
+                                <?php endif; ?>
                                 
                                 <form method="POST" action="/admin/assign-role" style="display: inline; margin-left: 5px;">
                                     <input type="hidden" name="csrf_token" value="<?= csrfToken() ?>">
                                     <input type="hidden" name="user_id" value="<?= $user['id'] ?>">
                                     <select name="role" onchange="this.form.submit()" style="padding: 0.25rem;">
                                         <option value="">Назначить роль</option>
-                                        <option value="admin">Admin</option>
-                                        <option value="user">User</option>
+                                        <option value="admin" <?= $currentRole === 'admin' ? 'selected' : '' ?>>Admin</option>
+                                        <option value="user" <?= $currentRole === 'user' ? 'selected' : '' ?>>User</option>
                                     </select>
                                 </form>
                             </td>

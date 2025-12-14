@@ -2,6 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= $title ?? 'User Management System' ?></title>
     <link rel="stylesheet" href="/public/css/style.css">
@@ -9,6 +10,8 @@
 <body>
     <?php if (isAuthenticated()): ?>
         <?php require __DIR__ . '/navigation.php'; ?>
+    <?php else: ?>
+        <?php require __DIR__ . '/auth_navigation.php'; ?>
     <?php endif; ?>
     
     <main class="container">

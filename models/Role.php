@@ -36,15 +36,13 @@ class Role
             return false;
         }
 
-        $existing = Database::fetchOne(
-            "SELECT id FROM user_roles WHERE user_id = ? AND role_id = ?",
-            [$userId, $role->_id]
+        // Удаляем все существующие роли у пользователя
+        Database::execute(
+            "DELETE FROM user_roles WHERE user_id = ?",
+            [$userId]
         );
 
-        if ($existing) {
-            return true;
-        }
-
+        // Назначаем новую роль
         return Database::execute(
             "INSERT INTO user_roles (user_id, role_id) VALUES (?, ?)",
             [$userId, $role->_id]

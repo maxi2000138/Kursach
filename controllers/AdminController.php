@@ -31,6 +31,13 @@ class AdminController extends BaseController
             return;
         }
 
+        $currentUserId = (int)($_SESSION['user_id'] ?? 0);
+        if ($userId === $currentUserId) {
+            flash('error', 'Нельзя заблокировать самого себя');
+            $this->redirect('/admin');
+            return;
+        }
+
         $user = User::findById($userId);
         if (!$user) {
             flash('error', 'Пользователь не найден');
