@@ -12,14 +12,14 @@ services:
       - DB_HOST=db
       - DB_NAME=user_management
       - DB_USER=root
-      - DB_PASSWORD=Admin13
+      - DB_PASSWORD=
       - BASE_URL=http://localhost:8080
       - SMTP_HOST=smtp.gmail.com
       - SMTP_PORT=587
-      - SMTP_USERNAME=maxi2000138@gmail.com
-      - SMTP_PASSWORD=sfsb hthn gnap mxzt
+      - SMTP_USERNAME=
+      - SMTP_PASSWORD=
       - SMTP_ENCRYPTION=tls
-      - FROM_EMAIL=maxi2000138@gmail.com
+      - FROM_EMAIL=
       - FROM_NAME=User Management System
     networks:
       - app-network
@@ -28,7 +28,7 @@ services:
     image: mysql:8.0
     container_name: user_management_db
     environment:
-      - MYSQL_ROOT_PASSWORD=Admin13
+      - MYSQL_ROOT_PASSWORD=
       - MYSQL_DATABASE=user_management
     ports:
       - "3306:3306"

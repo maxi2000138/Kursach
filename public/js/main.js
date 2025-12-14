@@ -146,20 +146,22 @@ document.addEventListener('DOMContentLoaded', function() {
         toggle.type = 'button';
         toggle.className = 'password-toggle';
         toggle.innerHTML = '👁️';
-        toggle.style.cssText = 'position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; font-size: 1.2rem; opacity: 0.6;';
+        toggle.setAttribute('aria-label', 'Показать пароль');
         
         const formGroup = input.parentElement;
-        if (formGroup) {
-            formGroup.style.position = 'relative';
+        if (formGroup && formGroup.classList.contains('form-group')) {
             formGroup.appendChild(toggle);
             
-            toggle.addEventListener('click', function() {
+            toggle.addEventListener('click', function(e) {
+                e.preventDefault();
                 if (input.type === 'password') {
                     input.type = 'text';
                     toggle.innerHTML = '🙈';
+                    toggle.setAttribute('aria-label', 'Скрыть пароль');
                 } else {
                     input.type = 'password';
                     toggle.innerHTML = '👁️';
+                    toggle.setAttribute('aria-label', 'Показать пароль');
                 }
             });
         }
