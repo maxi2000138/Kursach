@@ -46,7 +46,7 @@ services:
     environment:
       - PMA_HOST=db
       - PMA_USER=root
-      - PMA_PASSWORD=Admin13
+      - PMA_PASSWORD=
     depends_on:
       - db
     networks:
