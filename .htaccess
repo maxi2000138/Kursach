@@ -1,0 +1,17 @@
+RewriteEngine On
+RewriteBase /
+
+# Исключаем статические файлы из перенаправления
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_URI} !\.(css|js|jpg|jpeg|png|gif|ico|svg|woff|woff2|ttf|eot)$ [NC]
+RewriteRule ^(.*)$ index.php [QSA,L]
+
+# Защита конфигов
+<FilesMatch "\.(php|ini)$">
+    <Files "config/*">
+        Order allow,deny
+        Deny from all
+    </Files>
+</FilesMatch>
+

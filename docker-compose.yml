@@ -1,0 +1,61 @@
+services:
+  web:
+    build: .
+    container_name: user_management_web
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/var/www/html
+    depends_on:
+      - db
+    environment:
+      - DB_HOST=db
+      - DB_NAME=user_management
+      - DB_USER=root
+      - DB_PASSWORD=Admin13
+      - BASE_URL=http://localhost:8080
+      - SMTP_HOST=smtp.gmail.com
+      - SMTP_PORT=587
+      - SMTP_USERNAME=maxi2000138@gmail.com
+      - SMTP_PASSWORD=sfsb hthn gnap mxzt
+      - SMTP_ENCRYPTION=tls
+      - FROM_EMAIL=maxi2000138@gmail.com
+      - FROM_NAME=User Management System
+    networks:
+      - app-network
+
+  db:
+    image: mysql:8.0
+    container_name: user_management_db
+    environment:
+      - MYSQL_ROOT_PASSWORD=Admin13
+      - MYSQL_DATABASE=user_management
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./sql/schema.sql:/docker-entrypoint-initdb.d/schema.sql
+    networks:
+      - app-network
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: user_management_phpmyadmin
+    ports:
+      - "8081:80"
+    environment:
+      - PMA_HOST=db
+      - PMA_USER=root
+      - PMA_PASSWORD=Admin13
+    depends_on:
+      - db
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  db_data:
+
