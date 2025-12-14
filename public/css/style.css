@@ -512,7 +512,7 @@ body {
 .password-toggle {
     position: absolute;
     right: 12px;
-    top: 50%;
+    top: 0;
     transform: translateY(-50%);
     background: none;
     border: none;
@@ -527,6 +527,7 @@ body {
     justify-content: center;
     transition: var(--transition);
     z-index: 10;
+    line-height: 1;
 }
 
 .password-toggle:hover {

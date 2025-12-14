@@ -9,4 +9,7 @@ Thumbs.db
 *.swo
 *~
 
+# Конфигурационные файлы с чувствительными данными
+config/mail.php
+docker-compose.yml
 

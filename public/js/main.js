@@ -152,6 +152,18 @@ document.addEventListener('DOMContentLoaded', function() {
         if (formGroup && formGroup.classList.contains('form-group')) {
             formGroup.appendChild(toggle);
             
+            // Вычисляем правильную позицию относительно input
+            const updatePosition = () => {
+                const inputRect = input.getBoundingClientRect();
+                const formGroupRect = formGroup.getBoundingClientRect();
+                const inputTop = inputRect.top - formGroupRect.top;
+                const inputHeight = inputRect.height;
+                toggle.style.top = (inputTop + inputHeight / 2) + 'px';
+            };
+            
+            updatePosition();
+            window.addEventListener('resize', updatePosition);
+            
             toggle.addEventListener('click', function(e) {
                 e.preventDefault();
                 if (input.type === 'password') {
